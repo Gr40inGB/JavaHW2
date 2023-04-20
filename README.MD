@@ -16,7 +16,6 @@
  такие как replace, split, substring и т.д. по необходимости
  Создать метод, который запишет результат работы в файл. Обработайте исключения и запишите ошибки в лог файл.
 2. *Получить исходную json строку из файла, используя FileReader или Scanner
-
 ```java
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -29,12 +28,11 @@ import java.util.logging.SimpleFormatter;
 
 public class Task1and2 {
     public static void main(String[] args) {
-//        
         String json = readFile("textJSON.txt");
-        safeToFile(parseWithCharArray(json),"ParsedJSON.txt");
-
+        safeToFile(parseWithCharArray(json), "ParsedJSON.txt");
     }
-    public static void safeToFile(String s, String path){
+
+    public static void safeToFile(String s, String path) {
         Logger logger = Logger.getAnonymousLogger();
         FileHandler fileHandler = null;
         try {
@@ -72,7 +70,7 @@ public class Task1and2 {
             } else {
                 if (c == ':') {
                     switch (currentWord.toString()) {
-                        case "фамилия" -> result.append(result.isEmpty() ? "Студент " : ".\nСтудент ");
+                        case "фамилия" -> result.append(result.isEmpty() ? "Студент " : "\nСтудент ");
                         case "оценка" -> result.append(" получил ");
                         case "предмет" -> result.append(" по предмету ");
                     }
@@ -80,10 +78,14 @@ public class Task1and2 {
                 } else if (c == ',') {
                     result.append(currentWord);
                     currentWord.delete(0, currentWord.length());
+                } else if (c == '}') {
+                    result.append(currentWord);
+                    result.append(".");
+                    currentWord.delete(0, currentWord.length());
                 }
             }
         }
-        return result.append(currentWord + ".").toString();
+        return result.toString();
     }
 
     public static String parseStringMetods(String s) {
@@ -109,6 +111,7 @@ public class Task1and2 {
     }
 }
 ```
+
 [Task3.java](src%2FTask3.java)
  3. Реализуйте алгоритм сортировки пузырьком числового массива,
 // результат после каждой итерации запишите в лог-файл.
